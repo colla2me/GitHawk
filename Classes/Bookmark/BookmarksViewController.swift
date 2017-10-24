@@ -74,6 +74,7 @@ TabNavRootViewControllerType {
         alert.addActions([
             AlertAction.clearAll({ [weak self] _ in
                 self?.bookmarkStore.clear()
+                self?.filteredBookmarks?.removeAll()
                 self?.tableView.reloadData()
                 self?.updateRightBarItem()
             }),
@@ -194,6 +195,7 @@ TabNavRootViewControllerType {
         let action = DeleteSwipeAction { [weak self] _, index in
             guard let strongSelf = self else { return }
             strongSelf.bookmarkStore.remove(bookmark: strongSelf.bookmarks[index.row])
+            strongSelf.updateRightBarItem()
         }
 
         return [action]
